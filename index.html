@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=.7">
+    <meta name="og:image" content="VCNU1.png">
+		<link rel="shortcut icon" type="image/png" href="VCNU1.png"/>
+    <title>whitehot robot tracks</title>
+		<meta name="description" content="whitehot robot tracks">
+    <style>
+      body, html{
+        border: 0;
+        background-color: #0000;
+        background-image: url(https://jsbot.whitehot.ninja/uploads/hVMqI.jpg);
+        background-repead: no-repeat;
+        background-attachment: fixed;
+        background-size: 100vw 100vh;
+        height: 100vh;
+        overflow: hidden;
+        color:#cfd;
+        font-size: .85em;
+        font-family: courier;
+        margin: 0;
+      }
+      .bg_overlay{
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        z-index: 0;
+        top: 0;
+        left: 0;
+        background: #0008;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100vw 100vh;
+        background-position: center center;
+      }
+      .headerLogo{
+        border-radius: 10px;
+        border: 1px solid #4f82;
+        position: fixed;
+        cursor: pointer;
+        left: 10px;
+        background-size: 200px 50px;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-color: #4f84;
+        background-image: url(playlist_logo.png);
+        top: 10px;
+        z-index: 100;
+        width: 200px;
+        height: 50px;
+      }
+      .main{
+        text-align: center;
+        padding-bottom: 100px;
+        z-index: 10;
+        top: 0;
+        left: 0;
+        position: relative;
+        min-height: 100vh;
+        width: 100%;
+      }
+      .deleteButton{
+        border: none;
+        border-radius: 5px;
+        outline: none;
+        cursor: pointer;
+        background-size: 35px 35px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-color: #0000;
+        width: 35px;
+        min-width: 25px;
+        height: 35px;
+        margin-left: 15px;
+        margin-right: 15px;
+        background-image: url(https://jsbot.whitehot.ninja/uploads/XeGsK.png);
+      }
+      .songButton{
+        border-radius: 15px;
+        display: inline-block;
+        border: none;
+        max-width: calc(75% - 0px);
+        min-width: calc(75% - 0px);
+        cursor: pointer;
+        color: #afa;
+        font-family: courier;
+        font-size: 2em;
+        padding: 10px;
+        margin: 10px;
+        whitespace: normal;
+        text-align: left;
+        text-shadow: 1px 1px 2px #000;
+        padding-left: 60px;
+        padding-right: 5px;
+        background-image: url(2ftyk1.png);
+        background-color: #044;
+        background-repeat: no-repeat;
+        background-position: 10px center;
+        background-size: 45px 45px;
+      }
+      .playerFrame{
+        left: 0;
+        top:0;
+        margin-top:0px;
+        width:100%;
+        min-width: 600px;
+        max-width: 70%;
+        height:290px;
+        border:none;
+        vertical-align:top;
+        border-radius: 10px;
+      }
+      input[type=checkbox]{
+        transform: scale(2.0);
+      }
+      label{
+        font-size: 2em;
+      }
+      .jumpButton{
+        position: fixed;
+        left: 0;
+        top: 0;
+        margin: 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        background: #408;
+        color: #fff;
+        border: none;
+        z-index: 20;
+        font-weight: 900;
+        font-family: courier;
+        cursor: pointer;
+      }
+      .trackButtons{
+        margin-top: 20px;
+        width:100%;
+        min-width: 600px;
+        max-width: 75%;
+        display: inline-block;
+        max-height: calc(100vh - 390px);
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+      .modal{
+        position: fixed;
+        width: 100vw;
+        height: calc(100vh - 100px);
+        padding-top: 100px;
+        text-align: center;
+        background: #001414e8;
+        display: none;
+        overflow-y: auto;
+      }
+      #addTrackModal{
+        z-index: 100;
+      }
+      .addTrackButton{
+        font-size: 16px;
+        margin: 10px;
+        width: calc(100% - 100px);
+      }
+      .normalButtons{
+        border: none;
+        border-radius: 5px;
+        outline: none;
+        background: #2fc6;
+        color: #8fc;
+        text-shadow: 2px 2px 2px #000;
+        font-size: 24px;
+        cursor: pointer;
+        min-width: 150px;
+        font-family: courier;
+      }
+      .closeButton{
+        background: #300;
+        color: #fcc;
+      }
+      .searchButton{
+        background: #032;
+        color: #8fc;
+      }
+      input[type=text]{
+        font-size: 24px;
+        background: #000;
+        border: none;
+        outline: none;
+        font-family: courier;
+        min-width: 400px;
+        border-bottom: 1px solid #084;
+        color: #ffc;
+        text-align: center;
+      }
+      .audiocloud{
+        background: #206;
+      }
+      a{
+        color: #ff0;
+        text-decoration: none;
+        background: #002;
+        border-radius: 5px;
+        padding: 5px;
+      }
+      #searchResults{
+        width: 800px;
+        padding: 20px;
+        padding-bottom: 100px;
+        font-size: 24px;
+        display: inline-block;
+      }
+      #audiocloudDiv{
+        backgroundL #f00;
+      }
+      #youtubeDiv{
+        backgroundL #04f;
+      }
+      .youtubeLogo{
+        color: #fff;
+        background: #f00;
+        font-weight: 900;
+      }
+      #bufferedTrack{
+        top: 348px;
+        left: 50%;
+        line-height: 16px;
+        transform: translate(-50%);
+        font-size: 18px;
+        background: linear-gradient(90deg, #000, #0000);
+        position: absolute;
+        text-align: left;
+        padding: 5px;
+        break-word: break-all;
+        width: 65%;
+        color: #bbba;
+      }
+      .bufferTrackTitle{
+        font-size: 16px;
+        font-style: oblique;
+        color: #aaa;
+      }
+      .loaded{
+        background: #4f8c;
+        color: #000;
+        position: absolute;
+        margin-top: -1px;
+        margin-left: 5px;
+        font-size: 16px;
+        line-height: 16px;
+        font-weight: 900;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="headerLogo" onclick="window.location.href='/public_playlists'" title="go to homepage"></div>
+    <div class="bg_overlay"></div>
+    <div id="addTrackModal" class="modal">
+      <input
+        spellcheck="false"
+        type="text"
+        autofocus
+        onkeypress="searchMaybe(event)"
+        id="searchBar"
+      ><br>
+      <div style="width: 300px;text-align: left;margin-left:auto;margin-right: auto;margin-top: 20px;">
+        <label for="exactCB">
+          <input type="checkbox" id="exactCB" oninput="toggleExact(this)">
+          exact match
+        </label><br>
+        <label for="allWordsCB">
+          <input type="checkbox" checked id="allWordsCB" oninput="toggleAllWords(this)">
+          include all words
+        </label>
+      </div>
+      <br><br><br>
+      <button onclick="search()" class="searchButton normalButtons">search</button><br><br>
+      <button onclick="closeModal('#addTrackModal')" class="closeButton normalButtons">close</button><br><br>
+      <div id="searchResults"></div>
+    </div>
+    <div class="main">
+      <br>
+      <label for="shuffle">
+        <input type="checkbox" checked id="shuffle" oninput="toggleShuffle(this)">
+        shuffle
+      </label>
+      <button onclick="showModal('#addTrackModal')" class="normalButtons">add track(s)</button>
+      <br><br>
+      <div id="iframeDiv">
+        <iframe
+          class="playerFrame"
+          src=""
+        ></iframe>
+      </div>
+      <br><br>
+      <div class="trackButtons"></div>
+      <div id="bufferedTrack"><span style="color: #fff;">next track:</span><br></div>
+    <script>
+      Rn=Math.random
+      userInteracted = false
+      let searchBar = document.querySelector('#searchBar')
+      let searchResults = document.querySelector('#searchResults')
+      let allWordsCB = document.querySelector('#allWordsCB')
+      let exactCB = document.querySelector('#exactCB')
+      let iframeDiv = document.querySelector('#iframeDiv')
+      let buffer_el = ''
+      let nextRnd
+      let shuffle = true
+      let exact = false
+      let allWords = true      
+      let bufferedTrack=document.querySelector('#bufferedTrack')
+
+      window.onkeydown=e=>{
+        if(e.keyCode==27) closeModal('#addTrackModal')
+      }
+
+      searchMaybe=e=>{
+        let sparam = searchBar.value
+        if(e.keyCode==13 && sparam !== ''){
+          search()
+        }
+      }
+      
+      addTrack=(id, source)=>{
+        sendData = { id, source }
+        //searchResults.innerHTML = ''
+        //searchBar.value = ''
+        //closeModal('#addTrackModal')
+        setTimeout(()=>{
+          alert("\nthe track is being added.\n\nif successful, it will appear in your list shortly, as if by magic...")
+        }, 0)
+        fetch('addTrack.php',{
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(sendData),
+        }).then(res=>res.json()).then(data=>{
+          if(data[0]){
+            tracks = ['tracks/' + data[1], ...tracks]
+            renderTracks()
+          } else {
+            alert('there was a problem adding the track!')
+          }
+        })
+      }
+      
+      search=()=>{
+        let sparam = searchBar.value
+        sparam = searchBar.value
+        if(!sparam) return
+        sendData = { sparam, allWords, exact }
+        fetch('search.php',{
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(sendData),
+        }).then(res=>res.json()).then(data=>{
+          if(data[0]){
+            res = JSON.parse(data[2])
+            searchResults.innerHTML=`search results [<a href="https://audiocloud.dweet.net" target="_blank">audiocloud</a>]<br><div id="audiocloudDiv">`
+            res[0].map(v=>{
+              searchResults.innerHTML+=`<button class="normalButtons addTrackButton audiocloud"
+                onclick="addTrack(`+v.id+`, 'audiocloud')"
+                title="description: `+v.description+`">`+v.trackName+`</button>`
+            })
+            if(!res.length) searchResults.innerHTML+='no results'
+            searchResults.innerHTML+='<br><br><br>search results ['
+            let sp = document.createElement('span')
+            sp.innerHTML='youtube'
+            sp.className='youtubeLogo'
+            searchResults.appendChild(sp)
+            searchResults.innerHTML+=`]<br><br></div><div id="youtubeDiv">`
+            searchResponse = data[1]
+            searchResponse.map(v=>{
+              searchResults.innerHTML+=`<button class="normalButtons addTrackButton"
+                onclick="addTrack('`+v.id+`', 'youtube')"
+                title="description: `+v.description+`">`+v.snippet.title+`</button>`
+            })
+            if(!searchResponse.length) searchResults.innerHTML+='no results'
+            searchResults.innerHTML+='</div>'
+          } else {
+            alert('there was a problem searching... :(')
+          }
+        })
+      }
+      
+      closeModal=modal=>{
+        document.querySelector(modal).style.display='none'
+      }
+      
+      showModal=modal=>{
+        document.querySelector(modal).style.display='block'
+        searchBar.focus()
+      }
+      
+      scrollUp=()=>{
+        window.scrollTo(0, 0)
+      }
+      
+      deleteTrack=idx=>{
+        let trackName=(l=decodeURI(tracks[idx]).split('/'))[l.length-1]
+        if(confirm("\n\nAre you SURE you want to do this????\n\nthis action is irreversible!")){
+          sendData = { trackName }
+          fetch('deleteTrack.php',{
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(sendData),
+          }).then(res=>res.json()).then(data=>{
+            if(data[0]){
+              tracks=tracks.filter((q,j)=>j!=idx)
+              setTimeout(()=>renderTracks(), 0)
+            }else{
+              alert("d'oh.\n\nthere was an error or summat")
+            }
+          })
+        }
+      }
+      
+      next = ''
+      
+      preloadNext=()=>{
+        setTimeout(()=>{
+          nextRnd = shuffle? Rn()*tracks.length|0 : (curIDX + 1)%tracks.length
+          let nextTrackName=decodeURI(tracks[nextRnd].replaceAll('tracks/',''))
+          let t=0
+          let loadingTimer = setInterval(()=>{
+            bufferedTrack.innerHTML='<span style="color: #afc;font-weight: 900;">next track:</span>'+" <span style=\"color: #aaa;font-weight: 900;\">(buffering"+('.'.repeat(t%8))+('&nbsp;'.repeat(8-(t%8)))+")</span>"+'<br>'+('&nbsp;'.repeat(4))+'<span class="bufferTrackTitle">'+nextTrackName+'</span>'
+            t+=1
+          }, 50)
+          preload = new Audio()
+          preload.style.position='absolute'
+          preload.style.visibility='hidden'
+          document.body.appendChild(preload)
+          setTimeout(()=>{
+            clearInterval(loadingTimer)
+          }, 30000)
+          setTimeout(()=>{
+            preload.crossorigin="anonymous"
+            preload.src = window.location.href + tracks[nextRnd] + (userInteracted ? '?autoplay' : '')
+            preload.onloadeddata=()=>{
+              clearInterval(loadingTimer)
+              bufferedTrack.innerHTML='<span style="color: #afc;font-weight: 900;">next track:</span>'+` <span class="loaded">(loaded!)</span>`+'<br>'+('&nbsp;').repeat(4)+'<span class="bufferTrackTitle">'+nextTrackName+'</span>'
+            }
+          }, 5000)
+        }, 0)
+      }
+      
+      playTrack=idx=>{
+        let src = 'https://audioplayer.whitehot.ninja/index.html?i=' + location.origin + '/' + tracks[idx] + (userInteracted ? '?autoplay' : '')
+        console.log(idx, userInteracted, src)
+        let el
+        (el = document.querySelectorAll('.playerFrame')[0])
+        preloadNext()
+        postMessage(JSON.stringify({'userInteracted': userInteracted}))
+        el.src = 'https://audioplayer.whitehot.ninja/index.html?i=' + location.origin + '/' + tracks[idx] + (userInteracted ? '?autoplay' : '')
+      }
+      
+      curIDX = 0
+
+      renderTracks=()=>{
+        let trackDiv = document.querySelectorAll('.trackButtons')[0]
+        trackDiv.innerHTML = ''
+        tracks.map((v, i)=>{
+          let tb = document.createElement('button')
+          tb.className = 'songButton'
+          tb.onclick = () =>{
+            playTrack(curIDX = i)
+          }
+          tb.innerHTML = decodeURI(v.replaceAll('tracks/', '')) + '<br>'
+          trackDiv.appendChild(tb)
+          let db = document.createElement('button')
+          db.className = 'deleteButton'
+          db.onclick = () =>{
+            deleteTrack(curIDX = i)
+          }
+          trackDiv.appendChild(db)
+        })
+      }
+
+      postMessage=msg=>{
+        let el
+        (el = document.querySelectorAll('.playerFrame')[0])
+        //if(el.src.indexOf('index.html') != -1){
+          el.contentWindow.postMessage(msg, '*')
+        //}
+      }
+
+      console.log('attempting to set message listener')
+	    window.addEventListener('message', e => {
+
+        console.log('received message from audioplayer:',e)
+        const key = e.message ? 'message' : 'data';
+        const data = e[key];
+			  console.log('e[message]:',e.message,'e[data]',e.data,'e.playing',e.playing)
+        switch(data){
+          case 'ended':
+            playTrack(shuffle ? nextRnd : curIDX=(curIDX+1)%tracks.length)
+          break
+          case 'playing':
+            userInteracted = true
+          break
+        }
+	  }, false)
+
+      toggleShuffle=e=>{
+        shuffle = e.checked
+        preloadNext()
+      }
+
+      toggleExact=e=>{
+        exact = e.checked
+      }
+
+      toggleAllWords=e=>{
+        allWords = e.checked
+      }
+
+
+tracks = ["'Order!'_ John Bercow's decade of thunderous pronouncements.mp3","(HQ) Dead Can Dance - Fortune Presents Gifts Not According to the Book (Aion).mp3","2 Stupid Dogs - Isn't that cute...BUT IT'S WRONG!.mp3","38 Special - Caught Up In You.mp3","80´s unknown Song - _your christmas day come on carol...need your eyes of love_ - help to identify.mp3","Abba - Chiquitita (Official Music Video).mp3","Abba - Dancing Queen (Official Music Video Remastered).mp3","Addicted To Love (Live at Camden Palace, London) (1994 Remastered Version).mp3","Air - Johann Sebastian Bach.mp3","Air Supply - Lost in Love (Lyrics).mp3","Alabama - The Closer You Get (Official Video).mp3","Alaska y Dinarama - A Quién Le Importa (Lyrics Spanish-English) (Español-Inglés).mp3","ALBERT ONE - TURBO DIESEL.mp3","Alphaville - Big In Japan (Official Music Video).mp3","Always Something There to Remind Me (2018 Remaster).mp3","Amy & Alba - Look into my eyes 1985.mp3","anthropology 3 0.mp3","antispace.mp3","Any Day Now -- Ronnie Milsap.mp3","Aqua - Barbie Girl (Official Music Video).mp3","Around My Heart.mp3","Art Affairs - Workaholic (Eurotops 1988).mp3","atmosphere.mp3","Ayds Candy Commercials.mp3","Bad Taste(Дурной Вкус) - Old Records(Пластинки) - English Translation.mp3","Bai Bang - Under your wings (1987).mp3","Ballermann Hits - Mike Krüger - Jenseits vom Tresen.mp3","Behind The Sun.mp3","Belinda Carlisle - Heaven Is A Place On Earth (Official Video).mp3","Belinda Carlisle - La Luna.mp3","Billy Ocean - Caribbean Queen (No More Love on the Run) (Official HD Video).mp3","Bizz Nizz - Dont Miss The Party Line.mp3","Blondie - Heart Of Glass (Official Music Video).mp3","Blood.mp3","Blur - Good Song (Official Music Video).mp3","BOMB THE BASS  _ Don't Make Me Wait _  12_.mp3","Bon Jovi - Keep The Faith (Official Music Video).mp3","bonnet.mp3","Bryan Ferry - Slave To Love [Official].mp3","butterflies fancier.mp3","Chic - You Are Beautiful (12 inch Remix) HQsound.mp3","CHiPs' - Theme Song (Intro).mp3","Chris Rea - Tell Me Theres A Heaven.mp3","Circle Jerks - Live Fast Die Young.mp3","Classic TV Theme_ Threes Company.mp3","Clio & Kay - Keep On Dancing.mp3","CLIP_ SPRING OP EN NEER - COOLE PIET EN DE INPAKBENDE (2001) • Videoclip uit de TV-serie.mp3","cloth actual.mp3","Cobra - Feel The Heat (Music Video).mp3","Come Undone.mp3","Commodores - Nightshift (Official Music Video).mp3","Company B - Fascinated (Tre's 707 Extended Dance Version).mp3","Coolio - Gangstas Paradise (Official Music Video) [HD] ft. L.V..mp3","CRASHDÏET - QUEEN OBSCENE.mp3","Credo Mutwa Speaks_ Mantindane aka Tall White ET - Mirror.mp3","Crowded House - Don't Dream It's Over (1986) HQ.mp3","Cutting Crew - (I Just) Died In Your Arms (Official Music Video).mp3","Cyndi Lauper - All Through the Night (Official Audio).mp3","Cyndi Lauper - Girls Just Want To Have Fun (Official Video).mp3","Cyndi Lauper - Girls Just Want To Have Fun [Lyrics English - Español Subtitulado].mp3","Cyndi Lauper - Time After Time (Official HD Video).mp3","DALLAS INTRO SEASON 1 1978.mp3","Damn Yankees - High Enough (Official Music Video).mp3","Dangerous Game.mp3","Dave Rodgers ‎– Tension.mp3","Dead Or Alive - Something in My House.mp3","Debbie Gibson - Out of the Blue (Official Music Video).mp3","deconstructed.mp3","Deep Blue Dream - Goals.mp3","Deep Blue Dream - Into My Hands.mp3","DEF LEPPARD - _Pour Some Sugar On Me_ (Official Music Video).mp3","Depeche Mode - But not tonight.mp3","Depeche Mode - Just Can't Get Enough (Official Video).mp3","Depeche Mode - Just Cant Get Enough (Official Video).mp3","Depeche Mode - New Life.mp3","Diana Ross - I'm Coming Out.mp3","Disco Inferno (Edit).mp3","Disco Tex And The Sex O Lettes   Get Dancing.mp3","DJ Fast Eddie, Kenny 'Jammin' Jason - Can U Dance (Original Remaster).mp3","Dokken - It's Not Love (Official Music Video).mp3","Dream Weaver.mp3","Drinkin' Thing.mp3","drunk Russian walrus ice fishing (subtitles).mp3","Duran Duran - Girls On Film (Official Music Video).mp3","Duran Duran - Ordinary World (Official Music Video).mp3","Duran Duran Duran - Ghetto Ghaggers.mp3","Earth, Wind & Fire - Let's Groove (Official HD Video).mp3","Elvis Costello & The Attractions - Everyday I Write The Book.mp3","EMELY JONES - No Time To Turn (Version Longue) 1984.mp3","Emperor Palpatine finds his Unlimited Power...cables..mp3","Ensis.mp3","entity 3.mp3","Erasure - A Little Respect.mp3","Erasure - Chains of Love (Official HD Video).mp3","Escape From New York Theme.mp3","Eternal Hell on Earth - _The Only Thing They Fear is You_ DOOM ETERNAL Music Video.mp3","Exodus - _Piranha_ live at Studio 54, NYC '85 (HD).mp3","Exposé - Come Go with Me (Official Video).mp3","Eye of the Pfizer.mp3","Faron Young - Hello Walls.mp3","Fast Eddie - Jack To The Sound Of The Underground [1988].mp3","Fire Tiger - Energy (Official Music Video).mp3","flux actual.mp3","flux fancy.mp3","Frankie Knuckles - Your Love.mp3","G G Near  Living in a Room ( Italo Disco ).mp3","Gangstas Paradise.mp3","Geil - Bruce & Bongo  The Original 1986 Video Clip!.mp3","Genesis - Jesus He Knows Me (Official Music Video).mp3","Gerry Rafferty - Baker Street (Official Video).mp3","Glen Campbell - Galveston.mp3","gogos vacation (unicorn mix).mp3","golden spiral.mp3","Goldie Lookin Chain - Your Mother's Got A Penis (Official Music Video).mp3","greece.mp3","Grieg_ Spring Dance Op. 47 No. 6.mp3","Guns N' Roses   Paradise City Live At The Ritz 1988 DVD HD.mp3","Heart - Alone.mp3","Herbie Mann & Tamiko Jones - A Man And A Woman (1967).mp3","High Hopes.mp3","hip breaker 3000.mp3","Huey Lewis & The News - Jacob's Ladder (1987, USA # 1, Enhanced).mp3","I Want Your Love.mp3","iamMANOLIS - My Future Girlfriend.mp3","immovable.mp3","In the Heat of the Night intro.mp3","In Yer Face (Mancunian Delight).mp3","Iron Maiden - Transylvania [Reading Festival '82].mp3","IRON WHAT Canadian tribute to Iron Maiden 2016.mp3","It's raining spiders! Spider rain phenomenon explained.mp3","It's The End Of The World As We Know It (And I Feel Fine).mp3","Its a Sin (2018 Remaster).mp3","Jane Child - Dont Wanna Fall In Love (Official Music Video).mp3","Jimmy Somerville feat. June Miles Kingston - Comment Te Dire Adieu (Official Video).mp3","Joe Smooth - Promised Land.mp3","John Parr - St. Elmo's Fire (Man in Motion) 1985.mp3","Johnny Logan - Hold Me Now (Audio).mp3","Johnny Logan - Whats another year.mp3","Jonathan Bree - Until Were Done.mp3","João Gilberto - 20 - Amor Certinho.mp3","Jungle Man.mp3","Just Another Dream.mp3","Kajagoogoo - Too Shy - Rai1 (DiscoRing) - 20.03.1983.mp3","Kano - Another Life (Remastered Video) (1983).mp3","Kariya - Let Me Love You For Tonight (Original House Club 12_ Mix ).mp3","Kate Bush - Running Up That Hill - Official Music Video.mp3","Kerr - Back At Ya.mp3","Laura Branigan - Self Control (Official Music Video).mp3","limbic.mp3","Lita Ford - Larger Than Life.mp3","Living In A Box - Living In A Box (Official Music Video).mp3","LoNero - Three's Company Theme.mp3","Lonnie Gordon - If I Have To Stand Alone.mp3","Love Affair - Everlasting Love (Official Video).mp3","Madonna - Cherish (Like a prayer) - Original 1989 vinyl - 33 RPM - Registration from speakers.mp3","Madonna - Holiday [Official Music Video].mp3","madonna- PARIS BERCY 2009-sticky and sweet tours round 2- holidays.mp3","Mahna Mahna The Muppet Show 1977 Original mana mana Snowths.mp3","Manul Sonnie.mp3","Marcus & Martinus - Elektrisk (Official Music Video) ft. Katastrofe.mp3","MARIA -- Blondie {Best name in the world edition} HD Remastered.mp3","Mark Boyce - All over the world.mp3","Martha & the Vandellas - Heatwave.mp3","Martin Denny - Swamp Fire.mp3","Megadeth - Peace Sells.mp3","meta shapes.mp3","Michelle Pfeiffer - Shes on Fire.mp3","Midnight Star-Operator This is an Emergency.mp3","Mike Mareen - Lady Ecstasy (High Energy).mp3","Ministry -  Everyday is Halloween (Remastered Music Video on HD) (For Braden S. & Alison The Artist).mp3","Modern Romance - Ay Ay Ay Ay Moosey - CD Remaster - 1981 HQ - 80s.mp3","Moon Zappa Valley Girl.mp3","Mott The Hoople - All the Young Dudes (Audio).mp3","Mr Fingers - Can You Feel It.mp3","Ms Mr - Hurricane (CHVRCHES Remix).mp3","multimaze.mp3","My Heart Goes Bang (Get Me To The Doctor).mp3","Nelly Furtado - Say It Right (Official Music Video).mp3","Nik Kershaw - I Won't Let The Sun Go Down On Me.mp3","Nu Shooz -  Point Of No Return (Live on The Rock N' Roll Evening News  - 1986).mp3","Nu Shooz - I can't wait (solid gold _ 1986).mp3","Nu Shooz - Point Of No Return (Official Music Video).mp3","NWA World Wide Wrestling Intro & Full Theme(TV Edit).mp3","Obsession.mp3","october.mp3","Oingo Boingo - Little Girls.mp3","Oliver Cheatham - Get Down Saturday Night (Secret Sun Remix).mp3","orbital geometry.mp3","Original GhostBusters Theme Song.mp3","our_lips_are_sealed.mp3","Out of Touch.mp3","pan flute.mp3","Parlez nous à boire.mp3","Pat Benatar - Invincible.mp3","Patrick Cowley - Mind Warp 1982.mp3","Paul Young - Come Back and Stay LIVE on The Tube with Pino Palladino on Bass.mp3","Paul Young - Love of the Common People (Official Video).mp3","Pet Shop Boys - Being Boring.mp3","Peter Gabriel - In Your Eyes.mp3","Primitive.mp3","Princess - Say I'm Your Number One (Official HD Video).mp3","Puff Daddy [feat. Faith Evans & 112] - Ill Be Missing You (Official Music Video).mp3","Pyotr Ilyich Tchaikovsky - Hymn of the Cherubim.mp3","Queen - The Miracle (Official Video).mp3","Queen - Under Pressure (Official Video).mp3","Quiet Riot - Metal Health (Bang Your Head) - HQ Audio.mp3","Raf - Self control (Official Video).mp3","Rage Against The Machine_ Bulls On Parade.mp3","Raspberry Beret.mp3","RATT - Lay It Down (Official Music Video).mp3","Ready For The World - Ceramic Girl.mp3","Rick Astley - It Would Take a Strong Strong Man (Official HD Video).mp3","Rick Astley - Take Me to Your Heart (Official Music Video).mp3","Rick James - Super Freak.mp3","Riff Deconstruction_ Optimistic - Radiohead.mp3","Rockwell - Somebody's Watching Me (Official Music Video).mp3","Ronnie Laws - City Girl 1984 HQ.mp3","Ronnie Milsap - (There's) No Gettin' Over Me.mp3","Ronnie Milsap - (Theres) No Gettin Over Me.mp3","Ronnie Milsap - Stranger in my House (1983 version).mp3","Rosanne Cash - Seven Year Ache (Official Video).mp3","sacred geometry.mp3","Samantha Fox Naughty Girls.mp3","Sandra - Around My Heart     (HQ).mp3","Sandra - Everlasting Love.mp3","Sektor Gaza   Sektor Gaza.mp3","Shadilay (Italian Version).mp3","Shakira - Waka Waka (This Time for Africa) (The Official 2010 FIFA World Cup™ Song).mp3","Simple Minds - Alive And Kicking.mp3","Sister Sledge - He's The Greatest Dancer (12 Inch Mix) (Intro) (1979).mp3","Sister Sledge - He's The Greatest Dancer.mp3","Sister Sledge - Lost In Music (TOTP 1984).mp3","Skid Row - Youth Gone Wild (Official Music Video).mp3","Soda Stereo - De Música Ligera (Letras).mp3","sprites extra fancy.mp3","Stereo MC's  _Connected_.mp3","Steve Winwood - Higher Love (Official Music Video).mp3","Surva Pernik.mp3","suzanne vega - luka (unicorn mix).mp3","Sweet Jane by Cowboy Junkies - Jess West ukulele cover.mp3","T.J. Hooker - Intro [HQ].mp3","Tatiana - Reportaje.mp3","Tears For Fears - Everybody Wants To Rule The World (Official Music Video).mp3","Tears For Fears - Mad World (Official Music Video).mp3","Tears for Fears - Sowing the seeds of love.mp3","TECHNOTRONIC  - This Beat Is Technotronic.mp3","Technotronic - Pump Up The Jam (Official Music Video).mp3","temp.zip","The Buggles - Video Killed The Radio Star (Official Music Video).mp3","The Call Of Ktulu.mp3","The Captain of Her Heart (Special Long Version).mp3","The Divine Comedy - Dumb It Down.mp3","The Divine Comedy - Love What You Do.mp3","The Donald - Trumpwave (HD remaster).mp3","the dying swan.mp3","The Go Gos - Vacation + Lyrics.mp3","the hand of god.mp3","The Innocents - Sooner Or Later (1980).mp3","The Love Boat 1979 Opening.mp3","The Power Station - Some Like It Hot.mp3","The Return of the Living Dead (210) Movie CLIP - 245-Trioxin (1985) HD.mp3","The Riddle.mp3","The Rolling Stones feat  Axl Rose & Izzy Stradlin  - Salt Of The Earth - 1989 - Blu-ray.mp3","The Romantics - Talking in Your Sleep.mp3","The Stone Roses - I Wanna Be Adored.mp3","They Live (1988) - One That Can See.mp3","They Say It's Gonna Rain.mp3","Thompson Twins - Doctor! Doctor! (Video).mp3","Thompson Twins - Lies.mp3","Three's Company   Opening Theme TV Series.mp3","Three's Company Theme.mp3","Threes Company Theme.mp3","Tina Turner - Whats Love Got To Do With It (Official Music Video).mp3","Tres - Break Your Body Down.mp3","Trou Macacq.mp3","Turn Around and Count 2 Ten.mp3","Two of Hearts - Stacey Q - HQHD.mp3","Two of Hearts by Stacey Q - Audio.mp3","Up Where We Belong + Joe CockerJennifer Warnes + LyricsHQ.mp3","Uschi Ischmeier - Jenseits von Schweden.mp3","Van Halen - Dreams.mp3","Van Halen - Jump.mp3","Van Halen - Why Can't This Be Love.mp3","voronoi deluxe.mp3","Warrant - Cherry Pie.mp3","Warrant - Heaven.mp3","Weird Al Yankovich - Rice Rice Baby.mp3","Wendys Training Video Hot Drinks.mp3","Westworld (1973) Trailer.mp3","Whitney Houston - I Wanna Dance With Somebody (Lyrics).mp3","Whitney Houston - I Wanna Dance With Somebody (Official Music Video).mp3","Wide Is.mp3","XTC - Another Satellite [HD].mp3","Yazoo - Situation (Original 12) - 1982.mp3","YES - Owner of a Lonely Heart (Official Music Video).mp3","Yvonne gage - garden of Eve (1981).mp3","Zootopia - Try Everything By Shakira (Music Video).mp3","[Futurama] Grunka Lunkas - Slurms Secret Ingredient.mp3","_Weird Al_ Yankovic - Living With A Hernia.mp3","Χωρίς Περιδέραιο - 48 Σιωπές.mp3","Дурной Вкус - Пластинки (EDIT).mp3","Звернення Міністра оборони України Олексія Резнікова до військовозобов‘язаних рф.mp3","Крис Кельми - Ночное рандеву.mp3","Мост - На старт (1987) (Black Devil).mp3","☺.mp3"]
+
+
+
+	    tracks = tracks.map(v=> 'tracks/'+encodeURIComponent(v))
+
+
+      vid = document.createElement('video')
+      vid.style.position = 'absolute'
+      vid.style.opacity = '0'
+      vid.style.top = '0'
+      vid.style.zIndex=-1;
+      vid.style.mouseEvents = 'none'
+      vid.style.left = '0'
+      document.body.appendChild(vid)
+      vid.src='sleepBuster.mp4'
+      vid.loop=true
+      vid.muted=true
+      vid.play()
+      renderTracks()
+      nextRnd = Rn()*tracks.length|0
+      playTrack(shuffle ? nextRnd : curIDX=(curIDX)%tracks.length)
+    </script>
+    </div>
+  </body>
+</html>
